@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  background: #020617;
+  color: white;
+  font-family: system-ui, sans-serif;
+}
+
+section {
+  padding: 4rem 2rem;
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+}
