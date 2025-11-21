@@ -10,17 +10,24 @@ export default function SidebarAdmin() {
     }`;
 
   return (
-    <aside className="w-56 bg-[#0D121F] border-r border-gray-800 p-4 flex flex-col gap-2">
-      <h2 className="text-lg font-semibold mb-3">Admin Menu</h2>
+    <aside className="w-56 bg-[#0D121F] border-r border-gray-800 p-4 flex flex-col gap-3">
+      <h2 className="text-lg font-semibold mb-2">Admin Menu</h2>
 
       <NavLink to="/dashboard" className={linkClass}>
         Dashboard
       </NavLink>
 
-      {/* Future pages */}
-      {/* <NavLink to="/logs" className={linkClass}>Event Logs</NavLink> */}
-      {/* <NavLink to="/billing" className={linkClass}>Billing</NavLink> */}
-      {/* <NavLink to="/settings" className={linkClass}>Settings</NavLink> */}
+      <NavLink to="/logs" className={linkClass}>
+        Event Logs
+      </NavLink>
+
+      <NavLink to="/billing" className={linkClass}>
+        Billing
+      </NavLink>
+
+      <NavLink to="/settings" className={linkClass}>
+        Settings
+      </NavLink>
     </aside>
   );
 }
