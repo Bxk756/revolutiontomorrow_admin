@@ -1,6 +1,8 @@
+// Strict PostCSS config for Vite + Tailwind + Vercel
 module.exports = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
+  plugins: [
+    require('tailwindcss'),
+    require('autoprefixer'),
+  ],
 };
+
