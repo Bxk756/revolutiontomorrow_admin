@@ -1,30 +1,58 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import DashboardPage from "./pages/DashboardPage";
-import NavbarAdmin from "./components/NavbarAdmin";
-import SidebarAdmin from "./components/SidebarAdmin";
+import Homepage from "./Homepage";
+import AdminRoutes from "./AdminRoutes";
+import SecurityScoreIndex from "./SecurityScoreIndex";
+import SLAStatusPanel from "./SLAStatusPanel";
+import SettingsPage from "./pages/SettingsPage";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="flex min-h-screen bg-[#0A0F18] text-white">
-        {/* Sidebar */}
-        <SidebarAdmin />
+      <Routes>
+        {/* Public landing */}
+        <Route path="/" element={<Homepage />} />
 
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col">
-          <NavbarAdmin />
+        {/* Admin shell (protected) */}
+        <Route
+          path="/admin"
+          element={
+            <AdminRoutes>
+              <SecurityScoreIndex />
+            </AdminRoutes>
+          }
+        />
 
-          <div className="flex-1 p-6">
-            <Routes>
-              <Route path="/" element={<DashboardPage />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              {/* More pages coming soon */}
-            </Routes>
-          </div>
-        </div>
-      </div>
+        <Route
+          path="/admin/security"
+          element={
+            <AdminRoutes>
+              <SecurityScoreIndex />
+            </AdminRoutes>
+          }
+        />
+
+        <Route
+          path="/admin/sla"
+          element={
+            <AdminRoutes>
+              <SLAStatusPanel />
+            </AdminRoutes>
+          }
+        />
+
+        <Route
+          path="/admin/settings"
+          element={
+            <AdminRoutes>
+              <SettingsPage />
+            </AdminRoutes>
+          }
+        />
+
+        {/* Fallback */}
+        <Route path="*" element={<Homepage />} />
+      </Routes>
     </BrowserRouter>
   );
 }
