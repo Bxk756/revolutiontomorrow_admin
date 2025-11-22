@@ -6,6 +6,10 @@ import SecurityScoreIndex from "./SecurityScoreIndex";
 import SLAStatusPanel from "./SLAStatusPanel";
 import SettingsPage from "./pages/SettingsPage";
 
+// AI Pages
+import AIStreamingConsole from "./pages/AIStreamingConsole";
+import AISOCReportPanel from "./pages/AISOCReportPanel";
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -50,9 +54,30 @@ export default function App() {
           }
         />
 
+        {/* NEW ✔ AI Streaming Console */}
+        <Route
+          path="/admin/ai-stream"
+          element={
+            <AdminRoutes>
+              <AIStreamingConsole />
+            </AdminRoutes>
+          }
+        />
+
+        {/* NEW ✔ AI SOC Report Generator */}
+        <Route
+          path="/admin/ai-report"
+          element={
+            <AdminRoutes>
+              <AISOCReportPanel />
+            </AdminRoutes>
+          }
+        />
+
         {/* Fallback */}
         <Route path="*" element={<Homepage />} />
       </Routes>
     </BrowserRouter>
   );
 }
+
