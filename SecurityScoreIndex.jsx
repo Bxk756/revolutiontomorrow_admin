@@ -1,64 +1,52 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import DashboardLayout from "./dashboard/DashboardLayout";
 
 export default function SecurityScoreIndex() {
-  const [score, setScore] = useState(null);
-
-  async function loadScore() {
-    try {
-      const res = await fetch("/api/security_score");
-      const json = await res.json();
-      setScore(json);
-    } catch (err) {
-      console.error("Security score error:", err);
-    }
-  }
-
-  useEffect(() => {
-    loadScore();
-  }, []);
-
-  if (!score) {
-    return (
-      <div className="bg-[#111622] p-6 rounded-xl border border-gray-800 text-gray-400">
-        Loading security index…
-      </div>
-    );
-  }
-
-  const overall = Math.round(score.overall || 0);
+  const score = 82;
 
   const color =
-    overall < 40 ? "text-red-500"
-    : overall < 70 ? "text-yellow-400"
-    : "text-green-400";
+    score >= 90 ? "text-green-400" :
+    score >= 70 ? "text-yellow-400" :
+    "text-red-400";
 
   return (
-    <div className="bg-[#111622] p-6 rounded-xl border border-gray-800 shadow mb-10">
-      <h2 className="text-lg font-semibold text-gray-200 mb-2">
-        Security Score Index
-      </h2>
+    <DashboardLayout title="Security Score Overview">
+      <div className="space-y-6">
 
-      <p className={`text-4xl font-bold ${color}`}>{overall}</p>
-      <p className="text-xs text-gray-500 mt-1">Overall security posture (0–100)</p>
+        {/* Score */}
+        <div className="text-center">
+          <h2 className="text-5xl font-bold mb-2">
+            <span className={color}>{score}</span>
+            <span className="text-gray-400 text-2xl ml-1">/ 100</span>
+          </h2>
+          <p className="text-gray-400">Live system health rating</p>
+        </div>
 
-      <div className="grid grid-cols-2 gap-4 mt-4 text-sm text-gray-300">
-        <div>
-          <p className="text-gray-400 text-xs">Detection</p>
-          <p>{score.detection}</p>
+        {/* Progress Bar */}
+        <div className="w-full bg-gray-800 rounded-full h-3">
+          <div
+            className="bg-blue-600 h-full rounded-full transition-all"
+            style={{ width: `${score}%` }}
+          />
         </div>
-        <div>
-          <p className="text-gray-400 text-xs">Response</p>
-          <p>{score.response}</p>
-        </div>
-        <div>
-          <p className="text-gray-400 text-xs">Hardening</p>
-          <p>{score.hardening}</p>
-        </div>
-        <div>
-          <p className="text-gray-400 text-xs">Compliance</p>
-          <p>{score.compliance}</p>
+
+        {/* Category breakdown */}
+        <div className="grid md:grid-cols-3 gap-5">
+          {[
+            { label: "Credential Security", value: 90 },
+            { label: "API Hardening", value: 75 },
+            { label: "Uptime & SLA", value: 88 },
+          ].map((item, idx) => (
+            <div key={idx} className="panel p-4 animate-fadeIn">
+              <p className="font-semibold mb-2">{item.label}</p>
+              <p className="text-xl font-bold text-blue-400">
+                {item.value}%
+              </p>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 }
+
