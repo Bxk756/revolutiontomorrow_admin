@@ -2,17 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  background: #020617;
-  color: white;
-  font-family: system-ui, sans-serif;
+/* -------------------------------------------
+   GLOBAL BASE STYLES
+------------------------------------------- */
+html {
+  scroll-behavior: smooth;
 }
 
+body {
+  margin: 0;
+  background: #020617; /* deep void navy */
+  color: white;
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Sections for landing pages (safe to keep) */
 section {
   padding: 4rem 2rem;
 }
 
 h1, h2, h3 {
   font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+/* -------------------------------------------
+   CUSTOM ANIMATIONS
+------------------------------------------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulseSoft {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn .35s ease-out;
+}
+
+.animate-slideIn {
+  animation: slideIn .3s ease-out;
+}
+
+.animate-pulseSoft {
+  animation: pulseSoft 1.4s ease-in-out infinite;
+}
+
+/* -------------------------------------------
+   GLOBAL UI ENHANCEMENTS
+------------------------------------------- */
+input, textarea, select {
+  @apply bg-[#111827] border border-gray-700 rounded-lg text-white px-3 py-2;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-600;
+  transition: border-color .2s, background-color .2s;
+}
+
+button {
+  @apply font-semibold rounded-lg transition;
+}
+
+/* Subtle universal shadow for panels */
+.panel {
+  @apply bg-[#0f1420] border border-gray-800 rounded-xl shadow;
+}
+
+/* Active sidebar item (for Sidebar patch) */
+.sidebar-active {
+  @apply bg-blue-600/20 text-blue-400 border-l-4 border-blue-500;
+}
+
+/* Universal hover glow (admin theme) */
+.hover-glow:hover {
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.35);
+}
+
+/* Code block universal style */
+.code-block {
+  @apply bg-[#111827] border border-gray-700 rounded-lg p-3 text-xs overflow-x-auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
