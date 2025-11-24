@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // ---------------------------
 // Register Service Worker (PWA)
 // ---------------------------
-if ("serviceWorker" in navigator) {
+ ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register("/service-worker.js")
