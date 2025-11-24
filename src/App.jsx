@@ -1,83 +1,48 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Homepage from "./Homepage";
-import AdminRoutes from "./AdminRoutes";
-import SecurityScoreIndex from "./SecurityScoreIndex";
-import SLAStatusPanel from "./SLAStatusPanel";
-import SettingsPage from "./pages/SettingsPage";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate
+} from "react-router-dom";
+import { AuthProvider, useAuth } from "./auth/AuthContext";
+import LoginPage from "./pages/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
 
-// AI Pages
-import AIStreamingConsole from "./pages/AIStreamingConsole";
-import AISOCReportPanel from "./pages/AISOCReportPanel";
+function ProtectedRoute({ children }) {
+  const { isAuthenticated, initializing } = useAuth();
+
+  if (initializing) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-slate-100">
+        <div className="text-sm text-slate-400">Loading session…</div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public landing */}
-        <Route path="/" element={<Homepage />} />
-
-        {/* Admin shell (protected) */}
-        <Route
-          path="/admin"
-          element={
-            <AdminRoutes>
-              <SecurityScoreIndex />
-            </AdminRoutes>
-          }
-        />
-
-        <Route
-          path="/admin/security"
-          element={
-            <AdminRoutes>
-              <SecurityScoreIndex />
-            </AdminRoutes>
-          }
-        />
-
-        <Route
-          path="/admin/sla"
-          element={
-            <AdminRoutes>
-              <SLAStatusPanel />
-            </AdminRoutes>
-          }
-        />
-
-        <Route
-          path="/admin/settings"
-          element={
-            <AdminRoutes>
-              <SettingsPage />
-            </AdminRoutes>
-          }
-        />
-
-        {/* NEW ✔ AI Streaming Console */}
-        <Route
-          path="/admin/ai-stream"
-          element={
-            <AdminRoutes>
-              <AIStreamingConsole />
-            </AdminRoutes>
-          }
-        />
-
-        {/* NEW ✔ AI SOC Report Generator */}
-        <Route
-          path="/admin/ai-report"
-          element={
-            <AdminRoutes>
-              <AISOCReportPanel />
-            </AdminRoutes>
-          }
-        />
-
-        {/* Fallback */}
-        <Route path="*" element={<Homepage />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/*"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
-
