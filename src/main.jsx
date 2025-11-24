@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // ---------------------------
 // Register Service Worker (PWA)
 // ---------------------------
- ("serviceWorker" in navigator) {
+if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register("/service-worker.js")
@@ -27,3 +27,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       });
   });
 }
+
