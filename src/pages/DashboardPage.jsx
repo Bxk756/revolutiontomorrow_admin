@@ -1,52 +1,82 @@
 import React from "react";
-import { useAuth } from "../auth/AuthContext";
-import SecurityScoreIndex from "../../SecurityScoreIndex";
-import SLAStatusPanel from "../../SLAStatusPanel";
+
+/**
+ * Layout
+ */
+import DashboardLayout from "../dashboard/DashboardLayout";
+
+/**
+ * Header / Controls
+ */
+import DashboardHeader from "../dashboard/DashboardHeader";
+import TopbarFilters from "../dashboard/TopbarFilters";
+import RiskBadgeLegend from "../dashboard/RiskBadgeLegend";
+
+/**
+ * Layout Helpers
+ */
+import DashboardGridLayout from "../dashboard/DashboardGridLayout";
+import DashboardSection from "../dashboard/DashboardSection";
+
+/**
+ * Panels / Widgets
+ */
+import DashboardCards from "../dashboard/DashboardCards";
+import SLAStatusPanel from "../dashboard/SLAStatusPanel";
+
+/**
+ * Charts
+ */
+import AnalyticsChart from "../dashboard/AnalyticsChart";
+import RiskDistributionChart from "../dashboard/RiskDistributionChart";
+import RiskTrendChart from "../dashboard/RiskTrendChart";
+import EventTypeBreakdown from "../dashboard/EventTypeBreakdown";
+
+/**
+ * Tables
+ */
+import EventsTable from "../dashboard/EventsTable";
 
 export default function DashboardPage() {
-  const { user, logout } = useAuth();
-
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
-      {/* Top bar */}
-      <header className="flex items-center justify-between border-b border-slate-800 px-6 py-3 bg-slate-950/80 backdrop-blur">
-        <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-2xl bg-blue-600/20 flex items-center justify-center">
-            <span className="text-sm font-bold text-blue-400">RT</span>
-          </div>
-          <div>
-            <h1 className="text-sm font-semibold">Revolution Tomorrow Admin</h1>
-            <p className="text-xs text-slate-400">
-              Secure AI operations dashboard
-            </p>
-          </div>
-        </div>
+    <DashboardLayout title="Dashboard Overview">
+      <DashboardHeader
+        title="Analytics Dashboard"
+        subtitle="Live API metrics, event intelligence, and risk activity"
+      />
 
-        <div className="flex items-center gap-3">
-          {user && (
-            <div className="text-xs text-right">
-              <div className="font-medium">{user.email}</div>
-              <div className="text-slate-400 capitalize text-[11px]">
-                {user.role || "admin"}
-              </div>
-            </div>
-          )}
-          <button
-            onClick={logout}
-            className="rounded-lg border border-slate-700 px-3 py-1.5 text-xs font-medium text-slate-100 hover:bg-slate-800 transition-colors"
-          >
-            Logout
-          </button>
-        </div>
-      </header>
+      <TopbarFilters />
+      <RiskBadgeLegend />
 
-      {/* Main content */}
-      <main className="flex-1 px-6 py-4">
-        <div className="grid gap-4 md:grid-cols-2">
-          <SecurityScoreIndex />
+      <DashboardGridLayout>
+        <DashboardSection title="Summary">
+          <DashboardCards />
+        </DashboardSection>
+
+        <DashboardSection title="Service Level Status">
           <SLAStatusPanel />
-        </div>
-      </main>
-    </div>
+        </DashboardSection>
+
+        <DashboardSection title="Usage Over Time">
+          <AnalyticsChart />
+        </DashboardSection>
+
+        <DashboardSection title="Risk Levels">
+          <RiskDistributionChart />
+        </DashboardSection>
+
+        <DashboardSection title="Risk Trend Over Time">
+          <RiskTrendChart />
+        </DashboardSection>
+
+        <DashboardSection title="Event Types">
+          <EventTypeBreakdown />
+        </DashboardSection>
+
+        <DashboardSection title="Recent Events">
+          <EventsTable />
+        </DashboardSection>
+      </DashboardGridLayout>
+    </DashboardLayout>
   );
 }
