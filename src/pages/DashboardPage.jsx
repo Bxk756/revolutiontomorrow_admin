@@ -23,6 +23,7 @@ import DashboardSection from "../dashboard/DashboardSection";
  */
 import DashboardCards from "../dashboard/DashboardCards";
 import SLAStatusPanel from "../dashboard/SLAStatusPanel";
+import EventsTableEnhanced from "../dashboard/EventsTableEnhanced";
 
 /**
  * Charts
@@ -31,11 +32,6 @@ import AnalyticsChart from "../dashboard/AnalyticsChart";
 import RiskDistributionChart from "../dashboard/RiskDistributionChart";
 import RiskTrendChart from "../dashboard/RiskTrendChart";
 import EventTypeBreakdown from "../dashboard/EventTypeBreakdown";
-
-/**
- * Tables
- */
-import EventsTable from "../dashboard/EventsTable";
 
 export default function DashboardPage() {
   return (
@@ -74,7 +70,7 @@ export default function DashboardPage() {
         </DashboardSection>
 
         <DashboardSection title="Recent Events">
-          <EventsTable />
+          <EventsTableEnhanced />
         </DashboardSection>
       </DashboardGridLayout>
     </DashboardLayout>
